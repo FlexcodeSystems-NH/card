@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Marketly.ai – AI Marketing Intelligence | Noureldeen Hossam</title>
+<meta name="description" content="Marketly.ai — the AI marketing system that knows and remembers. Graduation project, Digilians AI & Data Science track.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--bg:#111b2e;--bg2:#162238;--panel:#1a2944;--panel2:#20325a;--accent:#d4a12a;--accent2:#b8860b;--glow:rgba(212,161,42,.30);--paper:#f6f1e9}
+.stat.hot .n small{color:#1a1203}.stat.hot{color:#1a1203}.stat.hot p{color:#3b2a06}
+.loop{position:relative;width:min(440px,90vw);aspect-ratio:1;margin:auto}
+.loop svg{position:absolute;inset:0;width:100%;height:100%}
+.loop .node{position:absolute;width:23%;aspect-ratio:1;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;font-weight:900;font-size:13px;letter-spacing:.12em;background:var(--bg);transform:translate(-50%,-50%);transition:.4s}
+.loop .node.on{background:var(--accent);color:#1a1203;box-shadow:0 0 0 10px var(--glow)}
+.loop .core{position:absolute;left:50%;top:50%;width:44%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:var(--panel);display:grid;place-items:center;text-align:center;padding:16px;font-weight:900;font-size:17px;line-height:1.2}
+.loop .core em{font-style:normal;color:var(--accent)}
+.stages{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.stg{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stg b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);margin-bottom:10px}
+.stg h4{font-size:14px}.stg p{font-size:12px;color:var(--muted)}.stg i{display:inline-block;margin-top:8px;font-style:normal;font-size:11px;font-weight:800;color:var(--accent);background:rgba(212,161,42,.12);border-radius:6px;padding:2px 7px}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}.swot div{background:#faf6ee;border-radius:14px;padding:14px;font-size:14px;color:#4b5672}.swot b{display:block;font-size:11px;letter-spacing:.2em;margin-bottom:4px}
+.nlp{background:#f3ece0;border-radius:14px;padding:14px;margin:12px 0;direction:rtl;text-align:right;font-weight:800;font-size:18px}
+.nlp small{display:block;direction:ltr;text-align:left;font-size:11px;letter-spacing:.2em;color:var(--accent2)}
+.pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#fff;margin:6px 4px 0 0;direction:ltr}
+.role{background:linear-gradient(110deg,var(--accent),#f0c14b);color:#1a1203;border-radius:var(--r);padding:22px 26px;display:flex;gap:18px;align-items:center;margin-bottom:34px;font-weight:700}
+.role b{font-size:12px;letter-spacing:.2em;display:block}
+.role .av{flex:none;width:52px;height:52px;border-radius:50%;background:#1a1203;color:var(--accent);display:grid;place-items:center;font-weight:900}
+.plist{list-style:none;counter-reset:s}.plist li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed #e4dccd}
+.plist li:before{content:counter(s);flex:none;width:30px;height:30px;border-radius:9px;background:#f3ece0;color:var(--accent2);font-weight:900;display:grid;place-items:center}
+.plist b{display:block}.plist span{font-size:14px;color:#5a6785}
+.io{display:grid;grid-template-columns:1fr 1fr auto 1.3fr 1.3fr;gap:14px;align-items:center}
+.io .arrowBig{font-size:40px;color:var(--accent);font-weight:900;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(8px)}}
+.prompt{display:grid;grid-template-columns:1.2fr auto 1fr;gap:22px;align-items:center;background:#162238;border-radius:var(--r);padding:26px;color:#fff;margin-top:22px}
+.prompt pre{white-space:pre-wrap;font-size:11px;color:#6f7d99;max-height:120px;overflow:hidden;mask-image:linear-gradient(#000 50%,transparent)}
+.prompt .one{font-size:22px;font-weight:800}.prompt .one em{display:block;font-style:normal;color:var(--accent);direction:rtl;font-size:22px}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.igcard{background:#0c1220;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.igcard .h{display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:800;font-size:14px}
+.igcard .h i{width:30px;height:30px;border-radius:50%;background:#000;border:1px solid #333;display:grid;place-items:center;font-style:normal;font-size:12px;color:#fff}
+.igcard .c{padding:12px 14px 16px;font-size:14px;color:#cfd6e6}.igcard .c b{color:#fff}
+.assets{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center}
+.ratio{display:flex;flex-direction:column;gap:10px}.ratio div{display:flex;gap:12px;align-items:center;font-weight:700}
+.ratio span{width:52px;text-align:center;border:1px solid var(--accent);color:var(--accent);border-radius:10px;padding:6px 0;font-weight:900;font-size:13px}
+.vflow .fbox:not(.hi){background:var(--panel)}
+.biz .card h3{font-size:26px;font-weight:900}
+.biz .row{display:flex;justify-content:space-between;border-bottom:1px solid #eee5d6;padding:7px 0;font-size:14px}.biz .row span{color:#7a849c}
+@media(max-width:900px){.stages{grid-template-columns:1fr 1fr}.io,.prompt,.ig,.assets{grid-template-columns:1fr}.io .arrowBig{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="topbar"><div class="wrap">
+  <a class="back" href="../index.html">← Noureldeen Hossam</a>
+  <nav class="toc"><a href="#problem">Problem</a><a href="#loop">Loop</a><a href="#engines">Engines</a><a href="#content">Content generation</a><a href="#live">Live results</a><a href="#bulk">Bulk & video</a><a href="#clients">Clients</a><a href="#stack">Stack</a></nav>
+</div></div>
+
+<header class="hero"><div class="wrap heroGrid">
+  <div class="rv">
+    <img src="img/marketly-logo.png" alt="Marketly.ai logo" style="width:64px;border-radius:16px;margin-bottom:18px">
+    <span class="badge"><i></i>Graduation project · AI & Data Science track</span>
+    <h1>We built a system that <em>knows.</em></h1>
+    <p class="lede">Marketly is the AI marketing system that <b>knows and remembers</b>: it listens to the market, plans, creates, publishes, and learns from every result.</p>
+    <div class="meta"><span class="chip">Digilians · 9-month diploma</span><span class="chip">My role: content-generation lead</span><span class="chip">Production-deployed</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat hot rv d1"><div class="n"><span data-count="1">1</span><small>URL</small></div><p>The only input. Seven brand decisions come out.</p></div>
+    <div class="stat rv d2"><div class="n"><span data-count="6">6</span><small>engines</small></div><p>Brand · Decisions · SEO · Content · Bulk · Video</p></div>
+    <div class="stat rv d3"><div class="n"><span data-count="3">3</span><small>clients</small></div><p>Real businesses paid for three different entry points</p></div>
+    <div class="stat rv d4"><div class="n">21d<small>→ 8m</small></div><p>Video ad production: weeks become minutes</p></div>
+  </div>
+</div></header>
+
+<section class="s paper" id="problem"><div class="wrap">
+  <span class="eyebrow" style="color:var(--accent2)">The problem</span>
+  <h2 class="rv">The problem isn't data. <em style="color:var(--accent2)">It's visibility.</em></h2>
+  <p class="sub rv">Businesses are surrounded by data, but still make decisions with incomplete visibility.</p>
+  <div class="grid g4" style="margin-top:34px">
+    <div class="card rv d1"><div class="k">01</div><h3>Competitors are moving faster</h3></div>
+    <div class="card rv d2"><div class="k">02</div><h3>Customer behaviour keeps changing</h3></div>
+    <div class="card rv d3"><div class="k">03</div><h3>Trends appear and disappear quickly</h3></div>
+    <div class="card rv d4"><div class="k">04</div><h3>Marketing data is scattered across channels</h3></div>
+  </div>
+  <div class="callout rv">Companies don't lack data. <em>They lack one system that turns it into decisions.</em></div>
+</div></section>
+
+<section class="s" id="loop"><div class="wrap grid g2" style="align-items:center;gap:60px">
+  <div class="loop rv" id="loopViz">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#d4a12a" stroke-width=".5" stroke-dasharray="2 2"><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="40s" repeatCount="indefinite"/></circle></svg>
+    <div class="core">Every campaign <em>makes the next one smarter</em></div>
+  </div>
+  <div>
+    <span class="eyebrow">How Marketly works</span>
+    <h2 class="rv">One loop. <em>Memory that compounds.</em></h2>
+    <p class="sub rv">The result of every campaign feeds the next plan, so the system gets sharper the longer a brand uses it.</p>
+    <div class="grid" style="margin-top:26px">
+      <div class="card rv d1"><h3>Reduce time-to-market</h3><p>From brief to published creative in minutes, not weeks.</p></div>
+      <div class="card rv d2"><h3>Increase ROI</h3><p>Spend only on what's proven; ROAS measurable for the first time.</p></div>
+      <div class="card rv d3"><h3>Increase LTV</h3><p>Retention compounds into lower CAC and higher gross margin.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="s alt" id="engines"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow">The platform</span><h2 class="rv">Six engines. <em>One intelligence layer.</em></h2><p class="sub rv">Each engine is a door into the same brand memory: understand the brand once, and every module reuses it.</p></div><div class="bigNum rv">06</div></div>
+
+  <div class="card rv" style="padding:32px">
+    <span class="tagnum"><b>01</b>Brand intelligence</span>
+    <h3 style="font-size:28px;margin-top:10px">One brand in. Seven decisions out.</h3>
+    <p style="margin-bottom:22px">A seven-stage, governed pipeline turns a single website into a complete brand profile, proven on a real brand.</p>
+    <div class="stages">
+      <div class="stg"><b>1</b><h4>Scraper</h4><p>Text, links, socials, logo</p><i>Firecrawl</i></div>
+      <div class="stg"><b>2</b><h4>Brand profile</h4><p>Colour, niche, country, tier</p><i>PIL + Gemini</i></div>
+      <div class="stg"><b>3</b><h4>Offerings</h4><p>Products, prices, categories</p><i>Gemini</i></div>
+      <div class="stg"><b>4</b><h4>Competitor scout</h4><p>Verified competitors</p><i>Serper</i></div>
+      <div class="stg"><b>5</b><h4>Brand identity</h4><p>Voice, tone, pillars</p><i>Gemini</i></div>
+      <div class="stg"><b>6</b><h4>Trends & hooks</h4><p>Trends, angles, hooks</p><i>Gemini</i></div>
+      <div class="stg"><b>7</b><h4>Database</h4><p>Five targets, re-hosted logo</p><i>Supabase</i></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card rv" style="background:var(--paper);color:var(--paperInk)">
+      <span class="tagnum" style="color:var(--accent2)"><b>02</b>From data to decisions</span>
+      <h3 style="font-size:26px;margin-top:10px">Collect → Measure → Decide.</h3>
+      <p style="color:#5a6785">Every recommendation has a source; every number has a calculation behind it.</p>
+      <div class="nlp"><small>EGYPTIAN ARABIC NLP</small>تسليم الشحن بطيء جدًا<br><span class="pill" style="background:#c2410c">negative sentiment</span><span class="pill" style="background:#13213f">shipping delay</span></div>
+      <div class="swot"><div><b style="color:#0f766e">STRENGTHS</b>Metrics that beat the market, confirmed by benchmarks.</div><div><b style="color:#b91c1c">WEAKNESSES</b>Recurring complaints where competitors do better.</div><div><b style="color:#1d4ed8">OPPORTUNITIES</b>Competitors raise prices while your ratings stay strong.</div><div><b style="color:#b45309">THREATS</b>A rival runs 76 active ads, the longest at 94 days.</div></div>
+    </div>
+    <div class="card rv d2">
+      <span class="tagnum"><b>03</b>SEO engine</span>
+      <h3 style="font-size:26px;margin-top:10px">Not just an SEO tool, an intelligence layer.</h3>
+      <p>Search, social, competitor and market signals in one picture, in a five-step learning loop.</p>
+      <div class="flow" style="margin:18px 0"><div class="fbox">Collect</div><span class="farrow">→</span><div class="fbox">Understand</div><span class="farrow">→</span><div class="fbox">Learn</div><span class="farrow">→</span><div class="fbox">Reason</div><span class="farrow">→</span><div class="fbox hi">Recommend</div></div>
+      <p style="font-size:13px;letter-spacing:.15em;color:var(--accent);font-weight:800">APPLIED CASE · ODOO PARTNER, GERMANY</p>
+      <div class="grid g2" style="margin-top:10px"><div class="stat"><div class="n"><span data-count="2400">2400</span></div><p>monthly searches for "odoo erp software" + 15 buyer keywords the site was missing</p></div><div class="stat"><div class="n">~<span data-count="13">13</span><small>s</small></div><p>Largest Contentful Paint: technically clean but slow</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="s paper" id="content"><div class="wrap">
+  <div class="role rv"><div class="av">NH</div><div><b>MY WORKSTREAM</b>I led content generation: the AI pipelines that turn brand context and product information into post-ready creative, with a review-and-approval step before publishing.</div></div>
+  <div class="secHead"><div><span class="tagnum" style="color:var(--accent2)"><b>04</b>Content generation</span><h2 class="rv">One interface. <em style="color:var(--accent2)">Three specialized pipelines.</em></h2><p class="sub rv">Built tailored for KRAFT, then generalized for SaaS and for any physical product: post-ready creative, audited before it ships.</p></div><div style="text-align:right"><div class="bigNum rv" style="-webkit-text-stroke-color:var(--accent2)">1</div><p style="font-size:12px;font-weight:800;letter-spacing:.22em;color:#5a6785">LINE PROMPTS</p></div></div>
+
+  <div data-tabs class="rv">
+    <div class="tabs"><button class="on" data-t="t-gen">Generalized product</button><button data-t="t-phys">Physical (KRAFT)</button><button data-t="t-saas">SaaS</button></div>
+
+    <div class="tabpane on" id="t-gen">
+      <div class="io">
+        <figure class="shot" style="background:#fff"><img src="img/in-earrings.jpg" alt="Input: jewellery product photo"><figcaption>Input · product photo</figcaption></figure>
+        <figure class="shot"><img src="img/in-model.jpg" alt="Input: apparel product photo"><figcaption>Input · product photo</figcaption></figure>
+        <div class="arrowBig">→</div>
+        <figure class="shot"><img src="img/out-earrings.jpg" alt="Output: jewellery campaign creative"><figcaption>Output · jewellery campaign</figcaption></figure>
+        <figure class="shot"><img src="img/out-kraft.jpg" alt="Output: sportswear campaign creative"><figcaption>Output · sportswear drop</figcaption></figure>
+      </div>
+      <div class="grid g2" style="margin-top:24px">
+        <div class="card"><h3>Inputs</h3><ul class="ticks"><li>Product photo: isolated, then re-photographed into the scene</li><li>Catalogue record: name, type, price, category</li><li>Brand profile from the database: palette and logo</li></ul></div>
+        <div class="card"><h3>Product-first output</h3><p>The product is the hero (about 55–65% of the frame); the brand shapes the scene; the message becomes a caption.</p></div>
+      </div>
+      <div class="pipe" style="margin-top:30px">
+        <div class="step"><div class="dot">1</div><h4>Product isolation</h4><p>Gemini re-render + PIL cut-out → clean reference</p><span class="tool">Gemini · PIL</span></div>
+        <div class="step"><div class="dot">2</div><h4>Product intelligence</h4><p>Classifies the product's own category, not the brand's niche</p><span class="tool">Gemini</span></div>
+        <div class="step"><div class="dot">3</div><h4>Scene library</h4><p>Keyed by category: sportswear, footwear, accessory, electronics, beauty, F&B, SaaS, generic</p><span class="tool">Deterministic</span></div>
+        <div class="step"><div class="dot">4</div><h4>Prompt build</h4><p>Product-first prompt, built deterministically</p><span class="tool">Deterministic</span></div>
+        <div class="step"><div class="dot">5</div><h4>Generate & audit</h4><p>Image generation, then an AI fidelity audit</p><span class="tool">Gemini</span></div>
+        <div class="step human"><div class="dot">6</div><h4>Pillow finish</h4><p>Real logo, typography, final review</p><span class="tool">Pillow</span></div>
+      </div>
+      <div class="callout"><em>What makes it generalized:</em> one category-keyed scene library replaces KRAFT's bespoke, hand-tuned logic; the same pipeline onboards any product category with no new code.</div>
+    </div>
+
+    <div class="tabpane" id="t-phys">
+      <div class="grid g2">
+        <div class="card"><h3>Physical: the product is the hero <span class="chip" style="float:right;background:#13213f;color:var(--accent)">PRODUCT-LED</span></h3>
+          <ol class="plist"><li><div><b>Brand + product photo</b><span>The source of truth</span></div></li><li><div><b>Inspect + isolate</b><span>Capture product details</span></div></li><li><div><b>Message + art direction</b><span>Plan scene and text zones</span></div></li><li><div><b>Generate</b><span>Create the advertising image</span></div></li><li><div><b>Fidelity audit + review</b><span>Compare with the source product</span></div></li></ol></div>
+        <div class="card"><h3>Why fidelity matters</h3><p>For a clothing brand, a generated shirt that changes stitching or logo placement is unusable. Every image is compared with the real product before a person approves it.</p></div>
+      </div>
+    </div>
+
+    <div class="tabpane" id="t-saas">
+      <div class="grid g2">
+        <div class="card"><h3>SaaS: the message is the hero <span class="chip" style="float:right;background:#13213f;color:var(--accent)">MESSAGE-LED</span></h3>
+          <ol class="plist"><li><div><b>Brand + idea</b><span>No product photo required</span></div></li><li><div><b>Message strategy</b><span>Campaign angle and copy</span></div></li><li><div><b>Creative direction</b><span>Scene, style and layout</span></div></li><li><div><b>Generate + audit</b><span>Check text, facts, logo</span></div></li><li><div><b>Real logo + review</b><span>Final human approval</span></div></li></ol></div>
+        <div class="card"><h3>Built for B2B</h3><p>For software brands there is no product to photograph. The pipeline starts from the brand voice and a campaign idea, and audits every claim and logo before review.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt rv">
+    <div><p style="font-size:12px;letter-spacing:.2em;color:#9fb0d3;font-weight:800;margin-bottom:8px">BEFORE · HUNDREDS OF WORDS</p><pre>You are a senior art director. Create a high-end social media advertisement for a performance sportswear brand. The composition must follow the rule of thirds with the product placed on the left third. Lighting should be dramatic, cinematic, with a warm rim light and a cool fill. Keep the brand colors black, charcoal and white. Leave negative space in the top-right for a headline in a bold geometric sans-serif. The garment must keep its exact stitching, logo placement and fabric texture. Avoid distortions of the hands. Background: an ancient temple at golden hour with dust particles, aspect ratio 4:5, photorealistic, 8K, no watermark, no extra text…</pre></div>
+    <div class="farrow" style="font-size:34px">→</div>
+    <div><p style="font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:800;margin-bottom:8px">AFTER · ONE LINE</p><div class="one">"I want a heroic-themed post"<em>كأن القميص معمول للملك رمسيس</em></div><p style="font-size:13px;color:#9fb0d3;margin-top:6px">Egyptian Arabic works too</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="live"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow">Shipped, not mocked</span><h2 class="rv">Live on a real brand's <em>Instagram.</em></h2><p class="sub rv">Generated by the pipeline and published by KRAFT, an Egyptian sportswear brand, on its own account.</p></div></div>
+  <div class="ig">
+    <div class="igcard rv d1"><div class="h"><i>K</i>kraftwear.eg</div><figure class="shot" style="border-radius:0;border:0"><img src="img/kraft-post-tees.jpg" alt="KRAFT post: four tees on plinths"></figure><div class="c"><b>kraftwear.eg</b> Four colors. One standard. Lightweight, breathable, built to move with you.</div></div>
+    <div class="igcard rv d2"><div class="h"><i>K</i>kraftwear.eg</div><figure class="shot" style="border-radius:0;border:0"><img src="img/kraft-post-pants.jpg" alt="KRAFT post: track pants on gym bench"></figure><div class="c"><b>kraftwear.eg</b> KRAFT track pants. Built for the work nobody sees.</div></div>
+  </div>
+</div></section>
+
+<section class="s alt" id="bulk"><div class="wrap grid g2">
+  <div class="card rv">
+    <span class="tagnum"><b>05</b>Bulk product generation</span>
+    <h3 style="font-size:28px;margin:10px 0 22px">One product photo becomes a full asset library.</h3>
+    <div class="assets"><div class="ico" style="width:110px;height:110px;border-radius:24px;background:var(--paper)"><svg viewBox="0 0 24 24" style="width:54px;height:54px;stroke:#13213f"><path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3c0 2-2 3-4 3S8 5 8 3z"/></svg></div>
+      <div class="ratio"><div><span>4:5</span>Feed post</div><div><span>9:16</span>Story / Reel</div><div><span>1:1</span>Square ad</div><div><span>16:9</span>Banner</div><div><span>∞</span>More variants</div></div></div>
+    <div class="vs" style="margin-top:26px"><div class="old" style="font-size:48px">Days</div><div class="farrow" style="font-size:26px">→</div><div class="new" style="font-size:48px">Minutes</div></div>
+  </div>
+  <div class="card rv d2">
+    <span class="tagnum"><b>06</b>Video generation</span>
+    <h3 style="font-size:28px;margin:10px 0 18px">Brief in. Broadcast-ready ad out.</h3>
+    <div class="vs"><div class="old" style="font-size:56px">21d</div><div class="farrow" style="font-size:26px">→</div><div class="new" style="font-size:56px">8m</div></div>
+    <div class="flow vflow" style="margin-top:20px"><div class="fbox">Brand data</div><span class="farrow">→</span><div class="fbox">AI storyboard<small>Groq / Gemini</small></div><span class="farrow">→</span><div class="fbox hi">Human approval</div><span class="farrow">→</span><div class="fbox">Video + audio<small>Gemini Veo</small></div><span class="farrow">→</span><div class="fbox">Vision AI check<small>+ FFmpeg</small></div><span class="farrow">→</span><div class="fbox">MP4 / GIF</div></div>
+    <ul class="ticks" style="columns:2;margin-top:18px"><li>Cinematic logo reveal</li><li>Native voice, music & SFX</li><li>Exact 6s · 15s · 30s</li><li>AI logo validation</li><li>Storyboard sign-off</li><li>Brand consistency lock</li></ul>
+  </div>
+</div></section>
+
+<section class="s paper biz" id="clients"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow" style="color:var(--accent2)">Real-world validation</span><h2 class="rv">Three businesses. <em style="color:var(--accent2)">Three doors into one platform.</em></h2><p class="sub rv">Three independent businesses paid for three different views into the same system.</p></div><div class="bigNum rv" style="-webkit-text-stroke-color:var(--accent2)">03</div></div>
+  <div class="grid g3">
+    <div class="card rv d1"><h3>ART VISION</h3><p class="muted" style="font-size:12px;letter-spacing:.15em;font-weight:800">PRODUCTION HOUSE · CONTENT FOR JUMIA</p><p style="margin:12px 0">Bottlenecked on production.</p><div class="row"><span>Pain</span>Content throughput</div><div class="row"><span>Best fit</span>Content · Bulk · SEO</div><p style="margin-top:14px;font-size:12px;font-weight:800;letter-spacing:.15em;color:var(--accent2)">ENTERED VIA PRODUCTION CONTENT & SEO</p></div>
+    <div class="card rv d2"><h3 style="color:#3b3fd8">FlexCode</h3><p class="muted" style="font-size:12px;letter-spacing:.15em;font-weight:800">SOFTWARE COMPANY · ODOO PARTNER</p><p style="margin:12px 0">Invisible to its market vs. competitors.</p><div class="row"><span>Market</span>B2B · Germany · Formal</div><div class="row"><span>Hooks</span>LinkedIn-led · 7 posts · 5 trends</div><p style="margin-top:14px;font-size:12px;font-weight:800;letter-spacing:.15em;color:var(--accent2)">ENTERED VIA SEO / DISCOVERY</p></div>
+    <div class="card rv d3"><h3>KRAFT</h3><p class="muted" style="font-size:12px;letter-spacing:.15em;font-weight:800">SPORTSWEAR BRAND · EGYPT</p><p style="margin:12px 0">Needs content in its own voice.</p><div class="row"><span>Market</span>B2C · Egypt · Informal</div><div class="row"><span>Hooks</span>Instagram & Reels · 7 posts · 5 trends</div><p style="margin-top:14px;font-size:12px;font-weight:800;letter-spacing:.15em;color:var(--accent2)">ENTERED VIA CONTENT & ANALYSIS</p></div>
+  </div>
+  <div class="callout rv"><em style="color:var(--accent)">0</em> new CAC for expansion. What they bought isn't the product; it's an entry point. Every other module is expansion on the same account.</div>
+</div></section>
+
+<section class="s" id="stack"><div class="wrap">
+  <span class="eyebrow">Under the hood</span>
+  <h2 class="rv">From insight to impact. <em>From evidence to execution.</em></h2>
+  <div class="stack rv" style="margin-top:26px"><span>Gemini<small>reasoning · vision</small></span><span>Gemini Veo<small>video + audio</small></span><span>Groq<small>storyboards</small></span><span>Firecrawl<small>scraping</small></span><span>Serper<small>competitor search</small></span><span>PIL / Pillow<small>palette · finishing</small></span><span>FastAPI<small>orchestrator</small></span><span>React<small>frontend</small></span><span>Supabase<small>REST + storage</small></span><span>FFmpeg<small>assembly</small></span><span>Meta Ad Library<small>ads intel</small></span><span>Cloud Run · Vercel<small>deployment</small></span></div>
+  <div class="grid g2" style="margin-top:40px">
+    <div class="card rv"><h3>The team</h3><p>Fady Atef Kamal · Mohamed Hesham Mahmoud · Michael Ibrahim Fahem · <b style="color:var(--accent)">Noureldeen Hossam Tawfik</b> · Abdelrahman Mahmoud Fawzy · Ahmed Sedeq Qasim</p></div>
+    <div class="card rv d2"><h3>Programme</h3><p>Track: AI & Data Science · Supervisor: Prof. Ghazal Abdelaty Fahmy · Track head: Dr. Mahmoud Khalil</p><p style="margin-top:10px"><a href="../marketly-infographic.jpg" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">View the original project poster →</a></p></div>
+  </div>
+</div></section>
+
+<footer class="f"><div class="wrap"><span><b>Noureldeen Hossam Tawfik</b> · AI Engineer</span><span><a href="../index.html">All links</a> · <a href="flexcode.html">AI ERP automation</a> · <a href="academic.html">Academic planner</a></span></div></footer>
+
+<script src="app.js"></script>
+<script>
+// Marketly loop: place nodes and cycle highlight
+(function(){const v=document.getElementById('loopViz');const names=['LISTEN','PLAN','CREATE','PUBLISH','LEARN'];
+names.forEach((n,i)=>{const a=-90+i*72,r=38;const d=document.createElement('div');d.className='node';d.textContent=n;
+d.style.left=(50+r*Math.cos(a*Math.PI/180))+'%';d.style.top=(50+r*Math.sin(a*Math.PI/180))+'%';v.appendChild(d)});
+const ns=v.querySelectorAll('.node');let k=0;setInterval(()=>{ns.forEach((n,i)=>n.classList.toggle('on',i===k));k=(k+1)%ns.length},1100)})();
+</script>
+</body>
+</html>

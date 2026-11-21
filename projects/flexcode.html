@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI inside the ERP – Inbox to Quotation | Noureldeen Hossam</title>
+<meta name="description" content="An AI automation system built inside Odoo ERP: e-mail intake, LLM agents, document extraction, catalogue matching, vendor ranking and draft quotations with human approval.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.lanes{display:grid;gap:14px}
+.lane{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.lane .who{font-weight:900;font-size:17px}.lane .who small{display:block;color:var(--dim);font-weight:600;font-size:12px}
+.mail{position:relative;height:280px;border-radius:var(--r);background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);overflow:hidden}
+.mail .env{position:absolute;left:-60px;width:150px;padding:10px 12px;border-radius:12px;background:#fff;color:#13213f;font-size:12px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.3);animation:fly 6s linear infinite}
+.mail .env small{display:block;color:#6b7a99;font-weight:600}
+.mail .env:nth-child(2){top:30px;animation-delay:0s}.mail .env:nth-child(3){top:110px;animation-delay:2s}.mail .env:nth-child(4){top:190px;animation-delay:4s}
+@keyframes fly{0%{left:-170px;opacity:0}10%{opacity:1}45%{left:38%}55%{left:38%}90%{opacity:1}100%{left:110%;opacity:0}}
+.mail .brain{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--accent),var(--accent2));display:grid;place-items:center;box-shadow:0 0 0 14px var(--glow),0 0 60px var(--glow);font-weight:900;color:#06142e;animation:pulse 2s ease-in-out infinite;z-index:2;text-align:center;font-size:13px;line-height:1.2}
+@keyframes pulse{50%{box-shadow:0 0 0 22px rgba(56,189,248,.15),0 0 80px var(--glow)}}
+.mail .bins{position:absolute;right:16px;top:16px;bottom:16px;display:flex;flex-direction:column;justify-content:space-between;width:150px}
+.mail .bins div{border:1px dashed rgba(255,255,255,.25);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;color:var(--muted)}
+.srcs{counter-reset:s;display:grid;gap:10px}
+.src{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.src:before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:9px;background:var(--accent);color:#06142e;font-weight:900;display:grid;place-items:center}
+.src b{flex:1}.src small{color:var(--dim)}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #e7e1d6}
+.rule svg{flex:none;width:22px;height:22px;stroke:#0f766e;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.rule b{display:block}.rule span{color:#5a6785;font-size:14px}
+.choice{border-radius:16px;padding:16px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.choice b{color:var(--accent)}
+.rank{width:100%;border-collapse:collapse;font-size:14px}
+.rank td,.rank th{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+.rank th{color:var(--dim);font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.rank tr:first-of-type td{color:var(--accent);font-weight:800}
+.best{background:#16a34a;color:#fff;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:800}
+.rk{background:rgba(255,255,255,.08);border-radius:999px;padding:2px 10px;font-size:11px;font-weight:700;color:var(--muted)}
+@media(max-width:900px){.lane{grid-template-columns:1fr}.mail .bins{width:110px}}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="topbar"><div class="wrap">
+  <a class="back" href="../index.html">← Noureldeen Hossam</a>
+  <nav class="toc"><a href="#problem">Problem</a><a href="#flow">The flow</a><a href="#agents">Agents</a><a href="#pricelists">Price lists</a><a href="#enrich">Enrichment</a><a href="#trust">Guardrails</a><a href="#golive">Go-live</a></nav>
+</div></div>
+
+<header class="hero"><div class="wrap heroGrid">
+  <div class="rv">
+    <span class="badge"><i></i>Flexcode Systems · AI Engineer · 2026</span>
+    <h1>AI inside the ERP. <em>Inbox to quotation.</em></h1>
+    <p class="lede">An AI automation system I built inside <b>Odoo 19 Enterprise</b> for an industrial spare-parts trader: e-mails become structured requests, requests become priced draft quotations, and <b>a person approves every step that matters.</b></p>
+    <div class="meta"><span class="chip">Live in production</span><span class="chip">LLM agents · Vision</span><span class="chip">Python · PostgreSQL</span><span class="chip">Odoo.sh</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat hot rv d1"><div class="n"><span data-count="5">5</span><small>mail types</small></div><p>Every incoming e-mail is classified and routed to its own stage</p></div>
+    <div class="stat rv d2"><div class="n"><span data-count="4">4</span><small>formats</small></div><p>Mail text, PDF, Excel and images (vision) read by AI</p></div>
+    <div class="stat rv d3"><div class="n"><span data-count="6">6</span><small>sources</small></div><p>Ordered data sources for completing product information</p></div>
+    <div class="stat rv d4"><div class="n">0<small>auto-sends</small></div><p>The AI never sends, confirms or publishes on its own</p></div>
+  </div>
+</div></header>
+
+<section class="s paper" id="problem"><div class="wrap">
+  <span class="eyebrow" style="color:var(--accent2)">The problem</span>
+  <h2 class="rv">The work arrives by e-mail. <em style="color:var(--accent2)">The answers live in the ERP.</em></h2>
+  <p class="sub rv">A trading business receives customer enquiries, supplier quotes and vendor price lists all day. Turning them into quotations meant retyping items, hunting part numbers and comparing suppliers by hand.</p>
+  <div class="grid g3" style="margin-top:34px">
+    <div class="card rv d1"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Unstructured input</h3><p>Items hidden in mail text, PDFs, spreadsheets and photos, in every possible layout.</p></div>
+    <div class="card rv d2"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h3>Exact matching</h3><p>A very large catalogue where one wrong character in a part number means the wrong product.</p></div>
+    <div class="card rv d3"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div><h3>Best price, every time</h3><p>Many suppliers per product, prices changing with each new list.</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="flow"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow">The flow</span><h2 class="rv">From e-mail to draft quotation, <em>automatically.</em></h2><p class="sub rv">Moving a card to "Approved for quotation" builds the draft immediately; a background job also checks every few minutes.</p></div><div class="bigNum rv">07</div></div>
+  <div class="pipe rv">
+    <div class="step"><div class="dot">1</div><h4>Inbox</h4><p>Mailbox read by UID: no mail lost or read twice</p><span class="tool">IMAP</span></div>
+    <div class="step"><div class="dot">2</div><h4>Classify</h4><p>Enquiry, supplier quote, price list, customer mail or other</p><span class="tool">LLM</span></div>
+    <div class="step"><div class="dot">3</div><h4>Extract</h4><p>Items from text, PDF, Excel and images; combined part numbers split</p><span class="tool">Vision LLM</span></div>
+    <div class="step"><div class="dot">4</div><h4>Match</h4><p>Exact part number against the catalogue; manufacturer checked</p><span class="tool">PostgreSQL</span></div>
+    <div class="step"><div class="dot">5</div><h4>Rank</h4><p>Best vendor price, ties and lead time; unpriced vendors never chosen</p><span class="tool">Rules</span></div>
+    <div class="step"><div class="dot">6</div><h4>Draft</h4><p>Lines in the customer's order, price × sales factor, service charges</p><span class="tool">Odoo</span></div>
+    <div class="step human"><div class="dot">7</div><h4>Approve</h4><p>The team reviews and sends; nothing leaves on its own</p><span class="tool">Human</span></div>
+  </div>
+  <div class="grid g2" style="margin-top:40px">
+    <div class="mail rv">
+      <div class="env">RFQ · 12 items<small>PDF + Excel</small></div>
+      <div class="env">Supplier quote<small>mail text</small></div>
+      <div class="env">Price list<small>5,000 rows</small></div>
+      <div class="brain">AI<br>classifier</div>
+      <div class="bins"><div>→ RFQ desk</div><div>→ Vendor prices</div><div>→ Price-list import</div></div>
+    </div>
+    <div class="card rv d2">
+      <h3>Vendor ranking, as the team sees it</h3>
+      <p style="margin-bottom:12px">Illustrative example of the ranking shown on each product.</p>
+      <table class="rank"><tr><th>#</th><th>Vendor</th><th>Unit price</th><th>Status</th></tr>
+        <tr><td>1</td><td>Vendor A</td><td>100.00 EUR</td><td><span class="best">Best</span></td></tr>
+        <tr><td>2</td><td>Vendor B</td><td>118.40 EUR</td><td><span class="rk">Ranked</span></td></tr>
+        <tr><td>3</td><td>Vendor C</td><td>126.10 EUR</td><td><span class="rk">Ranked</span></td></tr>
+        <tr><td>4</td><td>Vendor D</td><td>131.75 EUR</td><td><span class="rk">Ranked</span></td></tr></table>
+    </div>
+  </div>
+</div></section>
+
+<section class="s alt" id="agents"><div class="wrap">
+  <span class="eyebrow">Three lanes, one catalogue</span>
+  <h2 class="rv">Every kind of mail <em>updates the same truth.</em></h2>
+  <div class="lanes" style="margin-top:30px">
+    <div class="lane rv d1"><div class="who">Customer enquiry<small>RFQ desk card</small></div><div class="flow"><div class="fbox">Extract items</div><span class="farrow">→</span><div class="fbox">Match products</div><span class="farrow">→</span><div class="fbox">Best vendor price</div><span class="farrow">→</span><div class="fbox hi">Draft quotation</div></div></div>
+    <div class="lane rv d2"><div class="who">Supplier quote<small>read by AI</small></div><div class="flow"><div class="fbox">Read mail + attachments</div><span class="farrow">→</span><div class="fbox">Existing part number always reused</div><span class="farrow">→</span><div class="fbox hi">Vendor prices</div></div></div>
+    <div class="lane rv d3"><div class="who">Vendor price list<small>file upload</small></div><div class="flow"><div class="fbox">Detect vendor, brand, columns, currency</div><span class="farrow">→</span><div class="fbox">Prices + new products</div><span class="farrow">→</span><div class="fbox hi">Re-rank vendors</div></div></div>
+  </div>
+  <div class="callout rv">When a price arrives later, <em>"Update from RFQ"</em> adds the item in place of its "to be confirmed" note, so quotations keep improving.</div>
+</div></section>
+
+<section class="s" id="pricelists"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow">Price-list engine</span><h2 class="rv">Rules first. <em>AI when needed.</em></h2><p class="sub rv">Large files run as background jobs with their own time budget, step by step.</p></div><div class="bigNum rv">09</div></div>
+  <div class="pipe rv compact">
+    <div class="step"><div class="dot">1</div><h4>Read file</h4></div><div class="step"><div class="dot">2</div><h4>Duplicates</h4></div><div class="step"><div class="dot">3</div><h4>Match products</h4></div><div class="step"><div class="dot">4</div><h4>Create missing</h4></div><div class="step"><div class="dot">5</div><h4>Write prices</h4></div><div class="step"><div class="dot">6</div><h4>Product details</h4><p>Fill empty fields only</p></div><div class="step"><div class="dot">7</div><h4>Replace old</h4><p>Same vendor & brand only</p></div><div class="step"><div class="dot">8</div><h4>Status</h4></div><div class="step"><div class="dot">9</div><h4>Ranking</h4></div>
+  </div>
+  <div class="grid g2" style="margin-top:36px">
+    <div class="card rv"><h3>Brand intelligence</h3><p>One brand, many names: aliases are learned, so "PxC" resolves to Phoenix Contact. The AI saves a new alias only when it is confident.</p>
+      <ul class="ticks"><li>Alias and prefix matching</li><li>Archived brands reactivated, never duplicated</li><li>One product per manufacturer when part numbers collide</li></ul></div>
+    <div class="card rv d2"><h3>The brand check</h3><p>If many part numbers in a list already exist under another brand, the import pauses before creating anything:</p>
+      <div class="grid" style="margin-top:12px"><div class="choice"><b>Same manufacturer</b> → merge the two brands</div><div class="choice"><b>Products are this brand</b> → move them to it</div><div class="choice"><b>Different manufacturers</b> → keep separate products</div></div>
+      <p style="margin-top:12px">The AI decides alone above a confidence threshold; otherwise it recommends and a person chooses.</p></div>
+  </div>
+</div></section>
+
+<section class="s alt" id="enrich"><div class="wrap grid g2" style="gap:50px;align-items:center">
+  <div>
+    <span class="eyebrow">Enrichment agent</span>
+    <h2 class="rv">Complete product data, <em>only where it's missing.</em></h2>
+    <p class="sub rv">Weight, origin, HS code, EAN, description and picture. Existing data is never rewritten; descriptions must be in English; every picture is checked by AI for logos, placeholders and watermarks.</p>
+  </div>
+  <div class="srcs rv">
+    <div class="src"><b>Existing data</b><small>kept as is</small></div>
+    <div class="src"><b>Distributor API</b><small>structured specs</small></div>
+    <div class="src"><b>Manufacturer website</b><small>per-brand site</small></div>
+    <div class="src"><b>Wider web</b><small>AI search</small></div>
+    <div class="src"><b>Image search</b><small>candidate pictures</small></div>
+    <div class="src"><b>AI picture check</b><small>reject logos & watermarks</small></div>
+  </div>
+</div></section>
+
+<section class="s paper" id="trust"><div class="wrap grid g2" style="gap:50px">
+  <div>
+    <span class="eyebrow" style="color:var(--accent2)">Guardrails</span>
+    <h2 class="rv">AI the business <em style="color:var(--accent2)">can trust.</em></h2>
+    <p class="sub rv">The rules that made it safe to run on real customers and real prices.</p>
+  </div>
+  <div class="rv">
+    <div class="rule"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>Exact part numbers only</b><span>Nothing invented; a part number written inside other text is still found and re-checked before applying.</span></div></div>
+    <div class="rule"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>Human approval</b><span>The AI drafts; people send, confirm and publish.</span></div></div>
+    <div class="rule"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>Never guess what matters</b><span>Lead time is never filled by AI, product cost is never changed, unpriced vendors are never auto-selected.</span></div></div>
+    <div class="rule"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>A list only touches its own brand</b><span>A new price list replaces older prices of the same vendor and brand, never another brand's.</span></div></div>
+    <div class="rule"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>Secrets stay out of chat</b><span>API keys are typed by a person into system settings.</span></div></div>
+  </div>
+</div></section>
+
+<section class="s" id="golive"><div class="wrap">
+  <span class="eyebrow">Engineering & go-live</span>
+  <h2 class="rv">Shipped to production <em>without losing a single e-mail.</em></h2>
+  <div class="grid g4" style="margin-top:30px">
+    <div class="card rv d1"><div class="k">01<span>✓</span></div><h3>Read-only checks</h3><p>Impact, settings and mailbox verified on production first.</p></div>
+    <div class="card rv d2"><div class="k">02<span>✓</span></div><h3>Zero-deletion merge</h3><p>Staging merged into production, verified file by file.</p></div>
+    <div class="card rv d3"><div class="k">03<span>✓</span></div><h3>Batched migration</h3><p>New columns filled in batches on a very large catalogue.</p></div>
+    <div class="card rv d4"><div class="k">04<span>✓</span></div><h3>Mailbox cut-over</h3><p>Moved by UID: no mail lost or read twice. Rollback plan ready.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card rv"><h3>Performance</h3><p>A cleanup on a multi-million-row table was crawling. I found the missing index; the job then finished in minutes. Background jobs got their own time budget after the platform's short cron limit stopped imports.</p></div>
+    <div class="card rv d2"><h3>Stack</h3><div class="stack" style="margin-top:10px"><span>Python</span><span>Odoo 19</span><span>PostgreSQL</span><span>OpenAI API</span><span>Vision LLMs</span><span>IMAP</span><span>REST APIs</span><span>Odoo.sh</span><span>Git</span></div></div>
+  </div>
+  <div class="callout rv">What I bring: <em>LLM agents that do real work inside business systems</em>, built on clean data, exact matching and human control.</div>
+</div></section>
+
+<footer class="f"><div class="wrap"><span><b>Noureldeen Hossam Tawfik</b> · AI Engineer</span><span><a href="../index.html">All links</a> · <a href="marketly.html">Marketly.ai</a> · <a href="academic.html">Academic planner</a></span></div></footer>
+<script src="app.js"></script>
+</body>
+</html>

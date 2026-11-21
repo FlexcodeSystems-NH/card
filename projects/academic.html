@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Academic Planner – Multi-Agent System | Noureldeen Hossam</title>
+<meta name="description" content="A multi-agent LLM system that builds a student's weekly academic plan, with a Tavily research engine, PostgreSQL/Supabase backend and a Reflex UI.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--accent:#2dd4bf;--accent2:#0d9488;--glow:rgba(45,212,191,.30);--bg:#0a1a2a;--bg2:#0d2236;--panel:#10283f;--panel2:#143250}
+.stat.hot{color:#032b27}.stat.hot p{color:#064e46}.stat.hot .n small{color:#032b27}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.day{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:190px}
+.day h5{font-size:12px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px}
+.blk{border-radius:9px;padding:7px 9px;font-size:12px;font-weight:700;margin-bottom:6px;opacity:0;transform:scale(.9);transition:.5s}
+.blk.in{opacity:1;transform:none}
+.blk.study{background:rgba(45,212,191,.16);color:#a7f3e8;border-left:3px solid var(--accent)}
+.blk.due{background:rgba(251,113,133,.16);color:#fecdd3;border-left:3px solid #fb7185}
+.blk.read{background:rgba(96,165,250,.16);color:#bfdbfe;border-left:3px solid #60a5fa}
+.blk.rest{background:rgba(255,255,255,.06);color:var(--muted);border-left:3px solid var(--dim)}
+.agents{position:relative;display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:24px;align-items:center}
+.agent{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:20px;padding:20px;position:relative}
+.agent b{display:block;font-size:18px}.agent span{color:var(--muted);font-size:14px}
+.agent .tg{display:inline-block;margin-top:10px;font-size:11px;font-weight:800;color:var(--accent);background:rgba(45,212,191,.12);border-radius:6px;padding:3px 8px}
+.hub{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,var(--panel2),var(--bg));border:2px solid var(--accent);box-shadow:0 0 0 14px var(--glow);font-weight:900;font-size:20px;padding:30px;animation:pulse2 3s ease-in-out infinite}
+.hub small{display:block;color:var(--muted);font-weight:600;font-size:13px;margin-top:6px}
+@keyframes pulse2{50%{box-shadow:0 0 0 24px rgba(45,212,191,.12)}}
+.col{display:grid;gap:16px}
+@media(max-width:900px){.week{grid-template-columns:repeat(2,1fr)}.agents{grid-template-columns:1fr}.hub{max-width:260px;margin:auto}}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="topbar"><div class="wrap">
+  <a class="back" href="../index.html">← Noureldeen Hossam</a>
+  <nav class="toc"><a href="#problem">Problem</a><a href="#agents">Agents</a><a href="#flow">How it works</a><a href="#plan">The plan</a><a href="#stack">Stack</a></nav>
+</div></div>
+
+<header class="hero"><div class="wrap heroGrid">
+  <div class="rv">
+    <span class="badge"><i></i>Digilians AI & Data Science · Project</span>
+    <h1>A study plan that <em>plans itself.</em></h1>
+    <p class="lede">A <b>multi-agent LLM system</b> that turns a student's courses, deadlines and free time into a realistic weekly plan, backed by live research and a real database.</p>
+    <div class="meta"><span class="chip">Multi-agent LLM</span><span class="chip">Tavily research engine</span><span class="chip">PostgreSQL / Supabase</span><span class="chip">Reflex UI</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat hot rv d1"><div class="n">1<small>week</small></div><p>Plans generated automatically, week by week</p></div>
+    <div class="stat rv d2"><div class="n">Multi<small>agent</small></div><p>Specialised agents instead of one giant prompt</p></div>
+    <div class="stat rv d3"><div class="n">Live<small>web</small></div><p>Research grounded in current sources via Tavily</p></div>
+    <div class="stat rv d4"><div class="n">Full<small>stack</small></div><p>Relational database + interactive Python UI</p></div>
+  </div>
+</div></header>
+
+<section class="s paper" id="problem"><div class="wrap">
+  <span class="eyebrow" style="color:var(--accent2)">The problem</span>
+  <h2 class="rv">Students don't lack material. <em style="color:var(--accent2)">They lack a plan that fits their week.</em></h2>
+  <div class="grid g3" style="margin-top:30px">
+    <div class="card rv d1"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Deadlines collide</h3><p>Assignments and exams from different courses land in the same week.</p></div>
+    <div class="card rv d2"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h3>Finding good resources takes time</h3><p>Searching for the right material for each topic eats into study time.</p></div>
+    <div class="card rv d3"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Plans don't survive reality</h3><p>Static timetables ignore how much time a student actually has.</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="agents"><div class="wrap">
+  <div class="secHead"><div><span class="eyebrow">The system</span><h2 class="rv">Specialised agents, <em>one shared plan.</em></h2><p class="sub rv">Each agent does one job well; an orchestrator combines their work into the weekly plan.</p></div></div>
+  <div class="agents rv">
+    <div class="col">
+      <div class="agent"><b>Planning</b><span>Breaks courses and goals into tasks and estimates effort.</span><br><span class="tg">LLM agent</span></div>
+      <div class="agent"><b>Research & analysis</b><span>Finds and summarises resources for each topic from the live web.</span><br><span class="tg">Tavily</span></div>
+    </div>
+    <div class="hub">Weekly plan<small>orchestrated by the multi-agent system</small></div>
+    <div class="col">
+      <div class="agent"><b>Scheduling</b><span>Places tasks into the student's available hours around deadlines.</span><br><span class="tg">LLM agent</span></div>
+      <div class="agent"><b>Memory</b><span>Courses, tasks and plans stored relationally for every student.</span><br><span class="tg">PostgreSQL · Supabase</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="s alt" id="flow"><div class="wrap">
+  <span class="eyebrow">How it works</span>
+  <h2 class="rv">From courses to calendar <em>in one run.</em></h2>
+  <div class="pipe rv" style="margin-top:30px">
+    <div class="step"><div class="dot">1</div><h4>Student input</h4><p>Courses, deadlines, goals and free hours</p><span class="tool">Reflex UI</span></div>
+    <div class="step"><div class="dot">2</div><h4>Understand</h4><p>Agents break the workload into tasks</p><span class="tool">LLM</span></div>
+    <div class="step"><div class="dot">3</div><h4>Research</h4><p>Relevant resources found and analysed</p><span class="tool">Tavily</span></div>
+    <div class="step"><div class="dot">4</div><h4>Schedule</h4><p>Tasks fitted into the week around deadlines</p><span class="tool">LLM</span></div>
+    <div class="step"><div class="dot">5</div><h4>Save</h4><p>Plan stored and versioned per student</p><span class="tool">Supabase</span></div>
+    <div class="step human"><div class="dot">6</div><h4>Review</h4><p>The student sees, adjusts and follows the plan</p><span class="tool">Reflex UI</span></div>
+  </div>
+</div></section>
+
+<section class="s" id="plan"><div class="wrap">
+  <span class="eyebrow">The output</span>
+  <h2 class="rv">A week that <em>builds itself.</em></h2>
+  <p class="sub rv">Illustrative example of a generated weekly plan.</p>
+  <div class="week rv" id="week" style="margin-top:26px"></div>
+  <div class="grid g4" style="margin-top:16px;font-size:13px"><span class="blk study in">Study block</span><span class="blk read in">Reading / resources</span><span class="blk due in">Deadline</span><span class="blk rest in">Buffer / rest</span></div>
+</div></section>
+
+<section class="s paper" id="stack"><div class="wrap grid g2" style="gap:40px">
+  <div><span class="eyebrow" style="color:var(--accent2)">Under the hood</span><h2 class="rv">Full stack, <em style="color:var(--accent2)">end to end.</em></h2><p class="sub rv">Designed, built and connected by me: agents, data model and interface.</p></div>
+  <div class="grid">
+    <div class="card rv d1"><h3>AI layer</h3><p>Multi-agent LLM orchestration, prompt engineering, Tavily API for grounded research and analysis.</p></div>
+    <div class="card rv d2"><h3>Data layer</h3><p>PostgreSQL on Supabase: a relational model for students, courses, tasks and plans.</p></div>
+    <div class="card rv d3"><h3>Interface</h3><p>Reflex: an interactive, production-ready web UI written in Python.</p></div>
+  </div>
+</div></section>
+
+<footer class="f"><div class="wrap"><span><b>Noureldeen Hossam Tawfik</b> · AI Engineer</span><span><a href="../index.html">All links</a> · <a href="flexcode.html">AI ERP automation</a> · <a href="marketly.html">Marketly.ai</a></span></div></footer>
+<script src="app.js"></script>
+<script>
+(function(){const days=['MON','TUE','WED','THU','FRI','SAT','SUN'];
+const plan=[[['study','Data Structures · 2h'],['read','Lecture notes']],[['study','Statistics · 1.5h'],['due','Lab report']],[['read','Research: ML papers'],['study','ML project · 2h']],[['study','Data Structures · 1h'],['study','Statistics practice']],[['due','Quiz · Statistics'],['rest','Buffer']],[['study','ML project · 3h'],['read','Tutorial videos']],[['rest','Review week'],['rest','Rest']]];
+const w=document.getElementById('week');days.forEach((d,i)=>{const c=document.createElement('div');c.className='day';c.innerHTML='<h5>'+d+'</h5>'+plan[i].map(b=>'<div class="blk '+b[0]+'">'+b[1]+'</div>').join('');w.appendChild(c)});
+const blks=w.querySelectorAll('.blk');const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){blks.forEach((b,i)=>setTimeout(()=>b.classList.add('in'),i*140));o.disconnect()}},{threshold:.3});o.observe(w);setTimeout(()=>blks.forEach(b=>b.classList.add("in")),2500)})();
+</script>
+</body>
+</html>
